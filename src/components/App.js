@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Route, Routes, useNavigate } from 'react-router-dom';
 import Header from './Header';
 import Main from './Main';
@@ -26,7 +26,7 @@ function App () {
   const [isImageOpen, setIsImageOpen] = useState(false);
  // Попап зум
   const [selectedCard, setSelectedCard] = useState({});
-
+  // карточки и контекст
   const [cards, setCards] = useState([]);
   const [currentUser, setCurrentUser] = useState({});
 
@@ -36,28 +36,31 @@ function App () {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   // Регистрация (да/нет)
   const [status, setStatus] = useState(false);
+  // статус окошка
   const [tooltipOpen, setTooltipOpen] = useState(false);
 
-    // Переменная для хранения истории
+    // Навигации
     const navigate = useNavigate();
 
     // Верификация токена
     useEffect( () => {
-      const token = localStorage.getItem('jwt')
-      if (token) { apiAuth.tokenVerification(token)
-          .then((res) => { setEmail(res.data.email); setIsLoggedIn(true); navigate('/') })
-          .catch((err) => { console.log(`При верификации токена возникла ошибка, ${err}`) })
+      const userToken = localStorage.getItem('token')
+      if (userToken) { apiAuth.tokenCheck(userToken)
+          .then((res) => { setEmail(res.data.email);
+            setIsLoggedIn(true);
+            navigate('/') })
+          .catch((err) => { console.log(`При проверке токена возникла ошибка, ${err}`) })
       }
     }, [navigate, isLoggedIn])
 
-// запрашиваем данные с сервера
+// Запрашиваем данные с сервера
  useEffect( () => {
   Promise.all([ api.getUserInfo(), api.getAllCards() ])
     .then(( [ userItem, allCards] ) => {
       setCurrentUser(userItem);
       setCards(allCards);
     })
-    .catch( (err) => { console.log(`При загрузке начальных данных возникла ошибка, ${err}`) })
+    .catch((err) => { console.log(`При загрузке начальных данных возникла ошибка, ${err}`) })
 }, [])
 
 
@@ -133,18 +136,22 @@ function handleUpdateUser (currentUser) {
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setIsImageOpen(false);
+    setTooltipOpen(false);
   }
 
     // Функция регистрации пользователя
     function handleRegister (email, password) {
-      apiAuth.userRegistration(email, password)
-        .then(() => { setTooltipOpen(true); setStatus(true) })
+      apiAuth.userReg(email, password)
+        .then(() => {
+          setTooltipOpen(true);
+          setStatus(true) })
         .catch((err) => { console.log(`При регистрации возникла ошибка, ${err}`); setTooltipOpen(true); setStatus(false) })
     }
     // Функция авторизации пользователя
     function handleLogin (email, password) {
-      apiAuth.userAuthorization(email, password)
+      apiAuth.userLog(email, password)
         .then((res) => {
+          // если с токеном всё ок, ведём на главную
           if (res.token) {
             localStorage.setItem('token', res.token);
             setEmail(email);
@@ -155,20 +162,25 @@ function handleUpdateUser (currentUser) {
         .catch((err) => { console.log(`При авторизации возникла ошибка, ${err}`); setTooltipOpen(true); setStatus(false) })
     }
     // Функция выхода пользователя
-    function handleLogout () { localStorage.removeItem('token'); setIsLoggedIn(false);  }
+    function handleLogout () {
+      // удаляем токен из хранилища
+      localStorage.removeItem('token');
+      setIsLoggedIn(false);  }
   
 
   return (
-<CurrentUserContext.Provider value={ currentUser }>
+    <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
-        < Header 
-          isLoggedIn = { isLoggedIn }
-          email = { email }
-          isLogout = { handleLogout } />
-        <Routes>
-          <ProtectedRoute path='/'
+      <Header
+        isLoggedIn = { isLoggedIn }
+        email = { email }
+        isLogout = { handleLogout } />
+      <Routes>
+        <Route path="/"
+        element={
+          <ProtectedRoute
+            element={Main}
             isLoggedIn = { isLoggedIn }
-            component = { Main }
             onEditProfile = { handleEditProfileClick }
             onEditAvatar = { handleEditAvatarClick }
             onAddPlace = { handleAddPlaceClick }
@@ -176,20 +188,22 @@ function handleUpdateUser (currentUser) {
             onCardDelete = { handleCardDelete }
             onCardLike = { handleCardLike }
             cards={ cards } />
-         <Route path = { `/sign-in` }>
-            <Login
-              handleLogin = { handleLogin }
-              isOpen = { tooltipOpen }
-              onClose = { closeAllPopups }
-              status = { status } />
-          </Route>
-          <Route path = { `/sign-up` }>
-            <Register
-              handleRegister = { handleRegister }
-              isOpen = { tooltipOpen }
-              onClose = { closeAllPopups }
-              status = { status } />
-          </Route>
+           }
+        />
+        <Route path ="/sign-in"
+          element = {<Login
+            handleLogin = { handleLogin }
+            isOpen = { tooltipOpen }
+            onClose = { closeAllPopups }
+            status = { status } />}
+        />
+        <Route path ="/sign-up"
+          element = {<Register
+            handleRegister = { handleRegister }
+            isOpen = { tooltipOpen }
+            onClose = { closeAllPopups }
+            status = { status } />}
+        />       
         </Routes>
         < Footer />
         < PopupEditProfile

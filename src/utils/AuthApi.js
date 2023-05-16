@@ -17,7 +17,7 @@ _request(link, authUrl) {
 }
 
   // метод верификации токена
-  tokenVerification (token) {
+  tokenCheck (token) {
     return this._request(`${this._authUrl}users/me`, {
       headers: {
         "Content-Type": "application/json",
@@ -26,27 +26,28 @@ _request(link, authUrl) {
     })
   }
 
-  // метод авторизации пользователя
-  userAuthorization (password, email) {
-    return this._request(`${this._authUrl}signin`, {
-      method: 'POST',
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ password, email })
-    })
-  }
-
   // метод регистрации пользователя
-  userRegistration (password, email) {
+   userReg (email, password) {
     return this._request(`${this._authUrl}signup`, {
       method: 'POST',
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ password, email })
+      body: JSON.stringify({ email, password })
     })
   }
+
+  // метод авторизации пользователя
+  userLog (email, password) {
+    return this._request(`${this._authUrl}signin`, {
+      method: 'POST',
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password })
+    })
+  }
+
 }
 
 

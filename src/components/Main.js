@@ -35,7 +35,7 @@ function Main (props) {
           onClick={ props.onAddPlace } />
       </section>
       <section className="cards">
-        { props.cards.map( (cardItem) => (
+        { props.cards.map((cardItem) => (
           < Card
             key = { cardItem._id }
             link = { cardItem.link }

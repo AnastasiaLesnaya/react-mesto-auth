@@ -6,15 +6,18 @@ function Register (props) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  function handleEmail (e) { setEmail(e.target.value) }
-  function handlePass (e) { setPassword(e.target.value) }
+  function handleEmail (e) { 
+    setEmail(e.target.value);
+  }
+  function handlePass (e) {
+    setPassword(e.target.value);
+  }
 
-  // обработка почты и пароля
   function handleSubmitButton (e) {
     e.preventDefault();
     props.handleRegister(email, password);
-    setPassword('');
     setEmail('');
+    setPassword('');
   }
 
   return (
@@ -27,16 +30,16 @@ function Register (props) {
                   placeholder="email" minLength="8" maxLength="40"  required />
             <span className="email-input-error auth__input-error" />
           </label>
-          <label htmlFor="passwd-input" className="auth__label">
-            <input id="passwd-input" name="passwd" type="password" onChange={ handlePass } value={ password || '' } className="auth__input"
-                   placeholder="Пароль" minLength="6" maxLength="18" required />
-            <span className="passwd-input-error auth__input-error" />
+          <label htmlFor="password-input" className="auth__label">
+            <input id="password-input" name="password" type="password" onChange={ handlePass } value={ password || '' } className="auth__input"
+                   placeholder="пароль" minLength="6" maxLength="18" required />
+            <span className="password-input-error auth__input-error" />
           </label>
-          <button type="submit" className="auth__button button" aria-label="Зарегистрироваться">Зарегистрироваться</button>
+          <button type="submit" className="button auth__button" aria-label="Зарегистрироваться">Зарегистрироваться</button>
         </form>
         <div className='auth__register'>
           <p>Уже зарегистрированы?</p>
-          <Link to="signin" className="auth__link">Войти</Link>
+          <Link to="/sign-in" className="auth__link">Войти</Link>
         </div>
       </div>
     </>
