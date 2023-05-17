@@ -43,10 +43,11 @@ function App () {
     const navigate = useNavigate();
 
     // Верификация токена
-    useEffect( () => {
+    useEffect(() => {
       const userToken = localStorage.getItem('token')
       if (userToken) { apiAuth.tokenCheck(userToken)
-          .then((res) => { setEmail(res.data.email);
+          .then((res) => {
+            setEmail(res.data.email);
             setIsLoggedIn(true);
             navigate('/') })
           .catch((err) => { console.log(`При проверке токена возникла ошибка, ${err}`) })
@@ -171,24 +172,27 @@ function handleUpdateUser (currentUser) {
   return (
     <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
-    <Routes>
       <Header
         isLoggedIn = { isLoggedIn }
         email = { email }
         isLogout = { handleLogout } />
-        <Route path="/"
+    <Routes>
+    <Route 
+        path="/"
         element={
           <ProtectedRoute
-            component={Main}
-            isLoggedIn = { isLoggedIn }
+            isLoggedIn = {isLoggedIn}
+            component={<Main
             onEditProfile = { handleEditProfileClick }
             onEditAvatar = { handleEditAvatarClick }
             onAddPlace = { handleAddPlaceClick }
             onCardClick = { handleCardClick }
             onCardDelete = { handleCardDelete }
             onCardLike = { handleCardLike }
-            cards={ cards } />
-           }
+            cards={ cards } 
+            />}
+          />
+          }
         />
         <Route path ="/sign-in"
           element = {<Login

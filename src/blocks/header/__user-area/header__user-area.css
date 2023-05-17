@@ -1,4 +1,4 @@
-.header__member-area {
+.header__user-area {
   margin: 0;
   padding: 0;
   display: flex;
@@ -6,7 +6,7 @@
 }
 
 @media screen and (max-width: 670px) {
-  .header__member-area {
+  .header__user-area {
     flex-wrap: wrap;
     justify-content: right;
     margin-right: 15px;

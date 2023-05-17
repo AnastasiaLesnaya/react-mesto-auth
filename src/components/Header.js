@@ -1,6 +1,6 @@
 import React from 'react';
 import headerLogo from '../images/header-logo.svg';
-import { Link, Route } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function Header (props) {
   return (
@@ -16,12 +16,8 @@ function Header (props) {
         ) : (
           // пользователь не авторизован
           <>
-            <Route path='/sign-up'>
               <Link to='/sign-in' className="header__menu-item">Вход</Link>
-            </Route>
-            <Route path='/sign-in'>
               <Link to='/sign-up' className="header__menu-item">Регистрация</Link>
-            </Route>
           </>
         )}
       </div>

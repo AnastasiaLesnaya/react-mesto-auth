@@ -14,7 +14,8 @@ function PopupEditProfile (props) {
   useEffect(() => {
     setName(currentUser.name);
     setDescription(currentUser.about)
-  }, [ props.isOpen ]);
+  }, [props.isOpen, currentUser.name, currentUser.about] );
+
   
   function handleSubmit (event) {
 // Запрещаем браузеру переходить по адресу формы
