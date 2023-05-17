@@ -43,7 +43,7 @@ function App () {
     const navigate = useNavigate();
 
     // Верификация токена
-    useEffect( () => {pat
+    useEffect( () => {
       const userToken = localStorage.getItem('token')
       if (userToken) { apiAuth.tokenCheck(userToken)
           .then((res) => { setEmail(res.data.email);
@@ -179,7 +179,7 @@ function handleUpdateUser (currentUser) {
         <Route path="/"
         element={
           <ProtectedRoute
-            element={Main}
+            component={Main}
             isLoggedIn = { isLoggedIn }
             onEditProfile = { handleEditProfileClick }
             onEditAvatar = { handleEditAvatarClick }
