@@ -9,7 +9,3 @@
 * Для создания использовались: flexbox, grid, javascript, API и др.
 * Проект портирован на "Реакт".
 * Реализованы идентификация, аутентификация, авторизация.
-
-**Ссылка**
-
-* https://anastasialesnaya.github.io/react-mesto-auth/

@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import PopupWithForm from './PopupWithForm';
 
 function PopupEditAvatar (props) {
@@ -16,7 +16,7 @@ function PopupEditAvatar (props) {
   }
 
   return (
-    < PopupWithForm
+    <PopupWithForm
       isOpen = { props.isOpen }
       onClose = { props.onClose }
       onSubmit = { handleSubmit }

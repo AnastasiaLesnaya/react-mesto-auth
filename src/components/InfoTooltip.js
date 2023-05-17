@@ -1,6 +1,6 @@
 import React from 'react';
 import success from '../images/icon/success.svg';
-import error from '../images/icon/error.svg'
+import error from '../images/icon/error.svg';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 
@@ -20,7 +20,7 @@ function InfoTooltip (props) {
   return (
     <div className={ `popup ${ props.isOpen ? 'popup_opened' : '' }` } id={ props.id }>
       <div className="popup__container">
-        <button type="button" className="popup__close" onClick={ redirectPopup } aria-label="Закрыть форму" />
+        <button type="button" className="button popup__close" onClick={ redirectPopup } aria-label="Закрыть форму" />
         <div className="auth__info">
           { props.status ? (
             <>

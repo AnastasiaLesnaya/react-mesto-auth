@@ -43,7 +43,7 @@ function App () {
     const navigate = useNavigate();
 
     // Верификация токена
-    useEffect( () => {
+    useEffect( () => {pat
       const userToken = localStorage.getItem('token')
       if (userToken) { apiAuth.tokenCheck(userToken)
           .then((res) => { setEmail(res.data.email);
