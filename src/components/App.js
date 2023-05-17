@@ -171,11 +171,11 @@ function handleUpdateUser (currentUser) {
   return (
     <CurrentUserContext.Provider value={ currentUser }>
       <div className="page">
+    <Routes>
       <Header
         isLoggedIn = { isLoggedIn }
         email = { email }
         isLogout = { handleLogout } />
-      <Routes>
         <Route path="/"
         element={
           <ProtectedRoute
@@ -204,32 +204,32 @@ function handleUpdateUser (currentUser) {
             onClose = { closeAllPopups }
             status = { status } />}
         />       
-        </Routes>
-        < Footer />
-        < PopupEditProfile
-          isOpen = { isEditProfilePopupOpen }
-          onClose = { closeAllPopups }
-          onUpdateUser = { handleUpdateUser }/>
-          
-          < PopupEditAvatar
-          isOpen = { isEditAvatarPopupOpen }
-          onClose = { closeAllPopups }
-          onUpdateAvatar = { handleUpdateAvatar } />
+       </Routes>
+       < Footer />
+       < PopupEditProfile
+         isOpen = { isEditProfilePopupOpen }
+         onClose = { closeAllPopups }
+         onUpdateUser = { handleUpdateUser }/>
+         
+         < PopupEditAvatar
+         isOpen = { isEditAvatarPopupOpen }
+         onClose = { closeAllPopups }
+         onUpdateAvatar = { handleUpdateAvatar } />
         
-        < PopupAddCard
-          isOpen = { isAddPlacePopupOpen }
-          onClose = { closeAllPopups }
-          onAddPlace = { handleAddCard } />
-          
-        < ImagePopup
-          isOpen = { isImageOpen }
-          onClose = { closeAllPopups }
-          card = { selectedCard } />
+       < PopupAddCard
+         isOpen = { isAddPlacePopupOpen }
+         onClose = { closeAllPopups }
+         onAddPlace = { handleAddCard } />
+         
+       < ImagePopup
+         isOpen = { isImageOpen }
+         onClose = { closeAllPopups }
+         card = { selectedCard } />
 
-        <InfoTooltip
-          isOpen = { tooltipOpen }
-          onClose = { closeAllPopups }
-          status = { status } />
+       <InfoTooltip
+         isOpen = { tooltipOpen }
+         onClose = { closeAllPopups }
+         status = { status } />
       </div>
     </CurrentUserContext.Provider>
   );
