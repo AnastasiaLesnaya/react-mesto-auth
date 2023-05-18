@@ -45,12 +45,12 @@ setUserInfo(data) {
 }
 
 // отправка аватара пользователя
-setAvatar(data) {
+setAvatar(avaLink) {
   return this._request(`${this._link}users/me/avatar`, {
     method: "PATCH",
     headers: this._headers,
     body: JSON.stringify({
-      avatar: data.link,
+      avatar: avaLink.avatar,
     }),
   });
  }
